@@ -1,9 +1,14 @@
+// //////////////////////////////////////////////
+/*
 // NOTE LEKTION 1
-
+*/
+// /////////////////////////////////////////////
 // import { createStore } from "redux";
 //
-// const reducer = (initialState=0, action) => {
-//   if (action.type === "INC") {
+// const INC = "INC"
+//
+// const reducer = (initialState = 0, action) => {
+//   if (action.type === INC) {
 //     return initialState + 1;
 //   } else if (action.type === "DEC") {
 //     return initialState - 1;
@@ -12,19 +17,84 @@
 // }
 //
 // const store = createStore(reducer, 1)
-//
+// //
 // store.subscribe(() => {
 //   console.log("store changed", store.getState());
-// })
-//
+// });
+// //
+// store.dispatch({type: "INC"});
 // store.dispatch({type: "INC"})
-// store.dispatch({type: "INC"})
-// store.dispatch({type: "INC"})
+// // store.dispatch({type: "INC"})
 // store.dispatch({type: "DEC"})
-// store.dispatch({type: "DEC"})
-// store.dispatch({type: "DEC"})
+// // store.dispatch({type: "DEC"})
+// // store.dispatch({type: "DEC"})
 
+// //////////////////////////////////////////////
+/*
 // NOTE LEKTION 2
+
+*/
+// /////////////////////////////////////////////
+
+import { createStore } from "redux";
+
+const todos = [{
+  id: 1,
+  item: "Klippa gräset",
+  done: false
+}, {
+  id: 2,
+  item: "Måla staketet",
+  done: false
+}];
+
+const reducer = (state = todos, action) => {
+  // if (action.type === "INC") {
+  //   return initialState + 1;
+  // } else if (action.type === "DEC") {
+  //   return initialState - 1;
+  // }
+  switch(action.type) {
+
+    case "ADD_TODO":
+    return state.concat({
+      id: Date.now(),
+      item: action.value,
+      done: false
+    });
+
+    case "MARK_TODO_AS_DONE":
+    return state.map((todo) => {
+      if(todo.id === action.value) {
+        return Object.assign({}, todo, {
+          done: true
+        })
+      }
+      return todo;
+    })
+
+    // break;
+    default:
+      return state
+  }
+  return state;
+}
+
+const store = createStore(reducer)
+
+console.log(store.getState(), ' Initial store');
+
+
+store.subscribe(() => {
+  console.log("store changed", store.getState());
+});
+
+store.dispatch({type: "ADD_TODO", value: "Köpa mjölk"});
+store.dispatch({type: "MARK_TODO_AS_DONE", value: 1});
+
+
+
+// NOTE LEKTION 3
 
 // import { combineReducers, createStore } from "redux";
 //
