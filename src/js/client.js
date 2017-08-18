@@ -49,11 +49,6 @@ const todos = [{
 }];
 
 const reducer = (state = todos, action) => {
-  // if (action.type === "INC") {
-  //   return initialState + 1;
-  // } else if (action.type === "DEC") {
-  //   return initialState - 1;
-  // }
   switch(action.type) {
 
     case "ADD_TODO":
@@ -73,6 +68,9 @@ const reducer = (state = todos, action) => {
       return todo;
     })
 
+    case "DELETE_TODO":
+    return state.filter(todo => todo.id !== action.value);
+
     // break;
     default:
       return state
@@ -91,6 +89,7 @@ store.subscribe(() => {
 
 store.dispatch({type: "ADD_TODO", value: "Köpa mjölk"});
 store.dispatch({type: "MARK_TODO_AS_DONE", value: 1});
+store.dispatch({type: "DELETE_TODO", value: 2});
 
 
 
@@ -98,7 +97,7 @@ store.dispatch({type: "MARK_TODO_AS_DONE", value: 1});
 
 // import { combineReducers, createStore } from "redux";
 //
-// // I would live in a separate file
+// I would live in a separate file
 // const userReducer = (state={}, action) => {
 //   switch(action.type) {
 //     case "SET_NAME": {
@@ -126,18 +125,18 @@ store.dispatch({type: "MARK_TODO_AS_DONE", value: 1});
 //   }
 //   return state;
 // }
-//
+// //
 // const reducers = combineReducers({
 //   user: userReducer,
 //   tweets: tweetsReducer
 // })
-//
+// //
 // const store = createStore(reducers)
 //
 // store.subscribe(() => {
 //   console.log("store changed", store.getState());
 // })
-//
+
 // store.dispatch({type: "SET_NAME", payload: "Will"})
 // store.dispatch({type: "SET_AGE", payload: 35})
 // store.dispatch({type: "SET_AGE", payload: 34})
